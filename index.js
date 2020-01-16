@@ -4,7 +4,7 @@ const express = require('express');
 const createError = require('http-errors');
 const cors = require('cors');
 const app = express();
-const api = require('./api');
+const api = require('./weatherAPI');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
