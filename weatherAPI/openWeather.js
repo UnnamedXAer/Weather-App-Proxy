@@ -94,9 +94,10 @@ class OpenWeatherApi {
 					visibility: data.visibility,
 					description: data.weather[0].description,
 					shortDescription: data.weather[0].main,
-					clouds: "CLOUDS????"
+					clouds: data.clouds.all
 				},
 				location: {
+					id: data.id,
 					city: data.name,
 					countryCode: data.sys.countryCode,
 					latitude: data.coord.lat,
