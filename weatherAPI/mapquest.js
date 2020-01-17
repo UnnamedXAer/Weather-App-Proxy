@@ -5,6 +5,11 @@ class MapQuestApi {
 	baseQueryParams = `key=${process.env.MAPQUEST_KEY}&thumbMaps=false&outFormat=json&includeRoadMetadata=false&includeNearestIntersection=false`;
 	getUrlByCoords = (cords) => {
 		const { latitude, longitude } = cords;
+
+		if (!cords || !latitude || !longitude) {
+			throw new Error('Parameter "latitude" and "longitude" expected to be number type.');
+		}
+
 		return `${this.url}?${this.baseQueryParams}&location=${latitude},${longitude}`;
 	};
 
@@ -15,7 +20,7 @@ class MapQuestApi {
 			const { data } = await axios.get(url);
 			// console.log(JSON.stringify(data), null, '\t');
 			if (data.info.statuscode > 299) {
-				throw new Error('Unable to call Api.\n' + (data.info.messages ? data.info.messages.join('\n') : ''));
+				throw new Error('Unable to fetch results.\n' + (data.info.messages ? data.info.messages.join('\n') : ''));
 			}
 
 			if (data.results && data.results.length > 0) {
@@ -23,7 +28,10 @@ class MapQuestApi {
 				if (locations && locations.length > 0) {
 					const loc = locations[0];
 					const payload = {
-						coords: { ...params },
+						coords: { 
+							latitude: loc.latLng.lat, 
+							longitude: loc.latLng.lng 
+						},
 						// copyright: data.info.copyright,
 						city: loc.adminArea5,
 						country: "",
@@ -31,10 +39,16 @@ class MapQuestApi {
 						postalCode: loc.postalCode,
 						region: loc.adminArea3
 					}
-					return payload;
+					return {
+						payload,
+						code: 200
+					};
 				}
 			}
-			return null;
+			return {
+				payload: null,
+				code: 200
+			};
 		}
 		catch (err) {
 			throw err;
