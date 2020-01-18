@@ -17,14 +17,14 @@ class OpenWeatherApi {
 				return `q=${loc.city}` + (loc.countryCode ? `,${loc.countryCode}` : '');
 			}
 		}
-		throw new Error("Location data are missing or incomplete.");
+		throw new Error('Location data are missing or incomplete.');
 	};
 
 	getUrl = (params) => {
 		const { endPint, units, lang, loc } = params;
 
-		if (typeof endPint != "string") {
-			throw new Error(`Parameter "endPoint" expected type is "string" but given "${typeof endPint}.`);
+		if (typeof endPint != 'string') {
+			throw new Error(`Parameter "endPoint" expected type is "string" but given "${typeof endPint}".`);
 		}
 
 		return `${this.url}${endPint}?${this.baseQueryParams}&${this.unitsParams(units)}&${this.langParam(lang)}&${this.locParams(loc)}`;
@@ -58,11 +58,11 @@ class OpenWeatherApi {
 				// openweathermap errors codes
 				if (err.response.data.cod === 429) {
 					return {
-						error: err.response.data.message || "API calls limit exceeded (60 calls per minute)",
+						error: err.response.data.message || 'API calls limit exceeded (60 calls per minute)',
 						code: 429
 					}
 				}
-				else if (err.response.data.cod == 404 && err.response.data.message == "city not found") {
+				else if (err.response.data.cod == 404 && err.response.data.message == 'city not found') {
 					return {
 						payload: null,
 						code: 200
