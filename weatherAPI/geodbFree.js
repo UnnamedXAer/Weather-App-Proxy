@@ -4,7 +4,6 @@ class GeodbFreeApi {
 	url = 'http://geodb-free-service.wirefreethought.com/v1/geo/cities';
 	baseQueryParams = ['includeDeleted=SINCE_YESTERDAY',
 		'&sort=-population,name',
-		// '&offset=0',
 		'&limit=10',
 		'&languageCode=en',
 		'&hateoasMode=true',
@@ -29,8 +28,7 @@ class GeodbFreeApi {
 		}
 
 		url += '&offset=' + (offset || 0);
-
-		// return this.url + '?offset=10&limit=10&includeDeleted=SINCE_YESTERDAY&sort=-population,name&languageCode=en&hateoasMode=true&minPopulation=1000&namePrefix=wa';
+		return url;
 	};
 
 	getData = async (params) => {
@@ -40,7 +38,6 @@ class GeodbFreeApi {
 		try {
 			const { data } = await axios.get(url);
 
-			console.log(JSON.stringify(data, null, '\t'));
 			if (data && data.data) {
 				const payload = {
 					locations: data.data.map(city => {

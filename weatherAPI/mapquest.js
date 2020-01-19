@@ -15,10 +15,10 @@ class MapQuestApi {
 
 	getData = async (params) => {
 		const url = this.getUrlByCoords(params);
-		// console.log('getData_url', url);
+		
 		try {
 			const { data } = await axios.get(url);
-			// console.log(JSON.stringify(data), null, '\t');
+
 			if (data.info.statuscode > 299) {
 				throw new Error('Unable to fetch results.\n' + (data.info.messages ? data.info.messages.join('\n') : ''));
 			}

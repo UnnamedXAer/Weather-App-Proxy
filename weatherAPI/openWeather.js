@@ -35,7 +35,6 @@ class OpenWeatherApi {
 		let url;
 		try {
 			url = this.getUrl(params);
-			console.log('url', url);
 		}
 		catch (err) {
 			return {
@@ -45,7 +44,7 @@ class OpenWeatherApi {
 
 		try {
 			const { data } = await axios.get(url);
-			console.log(JSON.stringify(data, null, '\t'));
+
 			const payload = this.parseData(data, params.endPint);
 			return {
 				payload,
