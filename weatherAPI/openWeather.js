@@ -77,6 +77,7 @@ class OpenWeatherApi {
 		if (type === 'weather') {
 			return {
 				weatherData: {
+					dt: data.dt*1000,
 					imgName: data.weather[0].icon,
 					temperature: {
 						main: data.main.temp,
@@ -88,8 +89,8 @@ class OpenWeatherApi {
 					humidity: data.main.humidity,
 					wind: data.wind,
 					time: data.dt * 1000,
-					sunrise: data.sys.sunrise,
-					sunset: data.sys.sunset,
+					sunrise: data.sys.sunrise*1000,
+					sunset: data.sys.sunset*1000,
 					visibility: data.visibility,
 					description: data.weather[0].description,
 					shortDescription: data.weather[0].main,
@@ -132,8 +133,8 @@ class OpenWeatherApi {
 				},
 				linesCnt: data.cnt,
 				sun: {
-					sunrise: data.city.sunrise,
-					sunset: data.city.sunset
+					sunrise: data.city.sunrise*1000,
+					sunset: data.city.sunset*1000
 				}
 			};
 		}
