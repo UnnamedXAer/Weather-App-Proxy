@@ -21,13 +21,13 @@ class OpenWeatherApi {
 	};
 
 	getUrl = (params) => {
-		const { endPint, units, lang, loc } = params;
+		const { endPoint, units, lang, loc } = params;
 
-		if (typeof endPint != 'string') {
-			throw new Error(`Parameter "endPoint" expected type is "string" but given "${typeof endPint}".`);
+		if (typeof endPoint != 'string') {
+			throw new Error(`Parameter "endPoint" expected type is "string" but given "${typeof endPoint}".`);
 		}
 
-		return `${this.url}${endPint}?${this.baseQueryParams}&${this.unitsParams(units)}&${this.langParam(lang)}&${this.locParams(loc)}`;
+		return `${this.url}${endPoint}?${this.baseQueryParams}&${this.unitsParams(units)}&${this.langParam(lang)}&${this.locParams(loc)}`;
 	};
 
 	getData = async (params) => {
@@ -43,9 +43,13 @@ class OpenWeatherApi {
 		};
 
 		try {
-			const { data } = await axios.get(url);
+			const { data } = await axios.get(url, {
+				responseType: "json", headers: {
+					"Content-Type": "application/json"
+				}
+			});
 
-			const payload = this.parseData(data, params.endPint);
+			const payload = this.parseData(data, params.endPoint);
 			return {
 				payload,
 				code: 200

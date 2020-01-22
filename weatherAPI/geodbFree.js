@@ -32,8 +32,16 @@ class GeodbFreeApi {
 	};
 
 	getData = async (params) => {
-		const url = this.getUrlByCityPrefix(params);
-		console.log(url);
+		let url;
+		try {
+			url = this.getUrlByCityPrefix(params);
+			console.log(url);
+		}
+		catch (err) {
+			return {
+				error: err
+			};
+		}
 
 		try {
 			const { data } = await axios.get(url);
