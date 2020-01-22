@@ -25,7 +25,6 @@ app.post('/call-api', async (req, res, next) => {
 		res.status(400);
 		return next(new Error('Wrong request: "provider" and "queryParams" parameters are required.'));
 	}
-setTimeout(async () => {
 	try {
 		const data = await api[provider].getData(queryParams);
 		if (data && data.error) {
@@ -38,7 +37,6 @@ setTimeout(async () => {
 		res.status(500);
 		next(err);
 	}
-},2000);
 });
 
 app.use((req, res, next) => {
